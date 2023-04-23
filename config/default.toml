@@ -1,0 +1,17 @@
+[app]
+    appEnv = "dafault"
+    serviceName = "touringparty"
+    shutdownTimeout = 2
+    shutdownDelay = 2
+    gitCommitHash = "nil"
+[tracing]
+    serviceName           = "touringparty"
+    logSpans              = false
+    host                  = "localhost"
+    port                  = "6831"
+    disabled              = false
+[sentry]
+    appName               = "touringparty"
+    dsn                   = "dummy"
+    mock                  = true
+    errorLevel            = 1
