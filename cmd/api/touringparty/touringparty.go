@@ -44,7 +44,7 @@ func Init(_ context.Context, env string, componentName string) {
 	if !ok {
 		log.Fatalf("invalid componentName given as input: [%v]", componentName)
 	}
-	log.Printf("Setting up metro component: [%v] in env: [%v]", componentName, env)
+	log.Printf("Setting up touringparty component: [%v] in env: [%v]", componentName, env)
 
 	// read the componentName config for env
 	var appConfig config.Config

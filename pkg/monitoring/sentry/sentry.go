@@ -23,10 +23,10 @@ type core struct {
 
 // Config holds sentry config
 type Config struct {
-	AppName    string
-	DSN        string
-	Mock       bool
-	ErrorLevel int8
+	AppName    string `yaml:"appName"`
+	DSN        string `yaml:"dns"`
+	Mock       bool   `yaml:"mock"`
+	ErrorLevel int8   `yaml:"errorLevel"`
 }
 
 // WriteHook captures Error events fired byy the logger

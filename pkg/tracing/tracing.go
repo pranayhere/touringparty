@@ -22,11 +22,11 @@ var (
 
 // Config ... struct expected by Init func to initialize jaeger tracing client.
 type Config struct {
-	LogSpans    bool   // when set to true, reporter logs all submitted spans
-	Host        string // jaeger-agent UDP binary thrift protocol endpoint
-	Port        string // jaeger-agent UDP binary thrift protocol server port
-	ServiceName string // name of this service used by tracer.
-	Disabled    bool   // to mock tracer
+	LogSpans    bool   `yaml:"logSpan"`     // when set to true, reporter logs all submitted spans
+	Host        string `yaml:"host"`        // jaeger-agent UDP binary thrift protocol endpoint
+	Port        string `yaml:"port"`        // jaeger-agent UDP binary thrift protocol server port
+	ServiceName string `yaml:"serviceName"` // name of this service used by tracer.
+	Disabled    bool   `yaml:"disabled"`    // to mock tracer
 }
 
 func Init(env string, cnf Config, zlog *zap.Logger) error {

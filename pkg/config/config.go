@@ -11,7 +11,7 @@ import (
 
 // Default options for configuration loading
 const (
-	DefaultConfigType     = "toml"
+	DefaultConfigType     = "yaml"
 	DefaultConfigDir      = "./config"
 	DefaultConfigFileName = "default"
 	WorkDirEnv            = "WORKDIR"
