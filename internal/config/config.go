@@ -7,16 +7,16 @@ import (
 
 // Config is application config
 type Config struct {
-	App     App
-	Tracing tracing.Config
-	Sentry  sentry.Config
+	App     App            `yaml:"app"`
+	Tracing tracing.Config `yaml:"tracing"`
+	Sentry  sentry.Config  `yaml:"sentry"`
 }
 
 // App contains application-specific config values
 type App struct {
-	Env             string
-	ServiceName     string
-	ShutdownTimeout int
-	ShoutdownDelay  int
-	GitCommitHash   string
+	Env             string `yaml:"env"`
+	ServiceName     string `yaml:"serviceName"`
+	ShutdownTimeout int    `yaml:"shutdownTimeout"`
+	ShoutdownDelay  int    `yaml:"shutdownDelay"`
+	GitCommitHash   string `yaml:"gitCommitHash"`
 }

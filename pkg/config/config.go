@@ -1,6 +1,7 @@
 package config
 
 import (
+	"log"
 	"os"
 	"path"
 	"runtime"
@@ -73,9 +74,7 @@ func NewConfig(opts Options) *Config {
 // Load reads environment specific configurations and along with the defaults
 // unmarshalls into config.
 func (c *Config) Load(env string, config interface{}) error {
-	if err := c.loadByConfigName(c.opts.defaultConfigFileName, config); err != nil {
-		return err
-	}
+	log.Println(c.opts.defaultConfigFileName)
 	return c.loadByConfigName(env, config)
 }
 
@@ -86,10 +85,12 @@ func (c *Config) loadByConfigName(configName string, config interface{}) error {
 	c.viper.SetConfigType(c.opts.configType)
 	c.viper.AddConfigPath(c.opts.configPath)
 	c.viper.AutomaticEnv()
-	c.viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+
+	log.Println(c.opts.configPath, configName)
+
 	if err := c.viper.ReadInConfig(); err != nil {
 		return err
 	}
+
 	return c.viper.Unmarshal(config)
 }
-

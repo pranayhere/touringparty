@@ -29,6 +29,7 @@ func InitMonitoring(env string, config config.App, sentry sentry.Config, tracing
 	if err != nil {
 		return err
 	}
+
 	err = tracingpkg.Init(env, tracing, logger.Desugar())
 	if err != nil {
 		return err

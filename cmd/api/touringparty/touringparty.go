@@ -66,7 +66,7 @@ func Init(_ context.Context, env string, componentName string) {
 	// Init the requested componentName
 	component, err = NewComponent(componentName, appConfig)
 	if err != nil {
-		log.Fatalf("error in creating metro component : %v", err)
+		log.Fatalf("error in creating touringparty component : %v", err)
 	}
 }
 
@@ -105,5 +105,5 @@ func Run(ctx context.Context) {
 		logger.Ctx(ctx).Fatalw("component exited with error", "msg", err.Error())
 	}
 
-	logger.Ctx(ctx).Infow("stopped metro")
+	logger.Ctx(ctx).Infow("stopped touringparty")
 }
