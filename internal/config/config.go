@@ -8,6 +8,7 @@ import (
 // Config is application config
 type Config struct {
 	App     App            `yaml:"app"`
+	Server  Server         `yaml:"server"`
 	Tracing tracing.Config `yaml:"tracing"`
 	Sentry  sentry.Config  `yaml:"sentry"`
 }
@@ -19,4 +20,15 @@ type App struct {
 	ShutdownTimeout int    `yaml:"shutdownTimeout"`
 	ShoutdownDelay  int    `yaml:"shutdownDelay"`
 	GitCommitHash   string `yaml:"gitCommitHash"`
+}
+
+type Server struct {
+	Grpc struct {
+		Host string `yaml:"host"`
+		Port string `yaml:"port"`
+	}
+	Http struct {
+		Host string `yaml:"host"`
+		Port string `yaml:"port"`
+	}
 }

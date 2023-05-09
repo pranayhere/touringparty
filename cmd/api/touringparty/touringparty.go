@@ -57,6 +57,8 @@ func Init(_ context.Context, env string, componentName string) {
 		log.Fatalf("%v config missing", componentName)
 	}
 
+	log.Printf("printing config %+v", appConfig)
+
 	err = boot.InitMonitoring(env, appConfig.App, appConfig.Sentry, appConfig.Tracing)
 
 	if err != nil {
