@@ -1,0 +1,134 @@
+syntax = "proto3";
+
+package topa.rpc.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "github.com/pranayhere/touringparty/proto/v1;topav1";
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "TouringParty APIs";
+    version: "1.0";
+    contact: {
+      name: "TouringParty APIs";
+      url: "https://github.com/pranayhere/touringparty";
+      email: "support@touringparty.com";
+    };
+  };
+  host: "https://api.touringparty.com/topa/v1";
+  external_docs: {
+    url: "https://api.touringparty.com/topa/docs";
+    description: "TouringParty APIs documentation";
+  }
+  schemes: HTTP;
+  consumes: "application/json";
+  produces: "application/json";
+  security_definitions: {
+    security: {
+      // Made up security so we can apply "Bearer <JWT_TOKEN>"
+      key: "BearerJwt";
+      value: {type: TYPE_INVALID};
+    }
+  }
+  // Default security definition.
+  security: {
+    security_requirement: {
+      key: "BearerJwt";
+      value: {};
+    }
+  }
+
+  responses: {
+    key: "500";
+    value: {
+      description: "Internal server error";
+      schema: {
+        json_schema: {default: "{\"code\": 13, \"message\": \"an error occurred\", \"details\": []}"}
+      }
+    }
+  }
+};
+
+// UserService defines the RPC/API for the User
+service UserService {
+  // CreateUser rpc/api creates user resource.
+  // It consumes CreateUserRequest and returns CreateUserResponse
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
+    option (google.api.http) = {
+      post: "/v1/users",
+      body: "*"
+    };
+  }
+
+  // GetUser rpc/api fetches the user resource.
+  // It consumes GetUserRequest and returns GetUserResponse.
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {
+    option (google.api.http) = {
+      get: "/v1/users"
+    };
+  }
+}
+
+// Returns the user entity.
+message User {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    example: "{\"id\": \"1\", \"email\": \"hello@topa.com\", \"external_id\": \"bec95f6a-2e45-4a9a-bb92-314073acf23e\"}"
+  };
+
+  // The id of the user.
+  string id = 1;
+
+  // The email of the user.
+  string email = 2;
+
+  // The external_id of the user
+  string external_id = 3;
+}
+
+// Find user by id.
+message GetUserRequest {
+  // The external_id of the user
+  string external_id = 1;
+}
+
+// Returns a single user.
+message GetUserResponse {
+  // The user entity
+  User user = 1;
+}
+
+// Create a new user.
+message CreateUserRequest {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    example: "{\"email\": \"hello@topa.com\", \"external_id\": \"bec95f6a-2e45-4a9a-bb92-314073acf23e\"}"
+  };
+
+  // The email of the user
+  string email = 1;
+
+  // The external id of the user
+  string external_id = 2;
+}
+
+// Returns the created user.
+message CreateUserResponse {
+  // The user entity.
+  User user = 1;
+}
+
+// Data returned in the Error Details.
+message ErrorResponse {
+  enum ErrorCode {
+    ERROR_CODE_UNSPECIFIED = 0;
+    ERROR_CODE_EMAIL_NOT_PROVIDED = 1;
+    ERROR_CODE_NOT_ENOUGH_BALANCE = 2;
+  }
+
+  // An enum value that indicates which error occurred.
+  ErrorCode error_code = 1;
+
+  // A field containing extra details about the error
+  string message = 2;
+}

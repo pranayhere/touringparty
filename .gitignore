@@ -1,0 +1,14 @@
+# JetBrains project folders.
+.idea/
+
+# VSCode project folder
+.vscode/*
+
+# Desktop Services Store - Mac.
+.DS_Store
+
+# Vendor modules.
+vendor/*
+
+# Generated Proto files
+gen
