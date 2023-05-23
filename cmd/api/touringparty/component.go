@@ -20,7 +20,7 @@ func NewComponent(component string, cfg config.Config) (*Component, error) {
 
 	switch component {
 	case Web:
-		svc, err = web.NewService()
+		svc, err = web.NewService(cfg)
 	}
 
 	if err != nil {

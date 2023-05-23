@@ -17,7 +17,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
       email: "support@touringparty.com";
     };
   };
-  host: "https://api.touringparty.com/topa/v1";
+  host: "https://api.touringparty.com/topa/";
   external_docs: {
     url: "https://api.touringparty.com/topa/docs";
     description: "TouringParty APIs documentation";
@@ -51,6 +51,34 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   }
 };
 
+message StatusCheckResponse {
+  // ServingStatus denotes the status of the service.
+  enum ServingStatus {
+    SERVING_STATUS_UNSPECIFIED = 0;
+    SERVING_STATUS_UNKNOWN = 1;
+    SERVING_STATUS_SERVING = 2;
+    SERVING_STATUS_NOT_SERVING = 3;
+  }
+  ServingStatus serving_status = 1;
+}
+
+// StatusCheckAPI defines the liveness and readiness check service.
+service StatusCheckService {
+  rpc LivenessCheck(google.protobuf.Empty) returns (StatusCheckResponse) {
+    option (google.api.http) = {
+      // Route to this method from GET requests to /v1/liveness
+      get: "/v1/liveness"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Do a liveness check"
+      description: "Checks only for the responsiveness of the service"
+      tags: "StatusCheck"
+      security: {}
+    };
+  }
+}
+
+
 // UserService defines the RPC/API for the User
 service UserService {
   // CreateUser rpc/api creates user resource.
@@ -60,13 +88,26 @@ service UserService {
       post: "/v1/users",
       body: "*"
     };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Create User Resource"
+      description: "Creates a User using the given details"
+      tags: "UserAPI"
+      security: {}
+    };
   }
 
   // GetUser rpc/api fetches the user resource.
   // It consumes GetUserRequest and returns GetUserResponse.
   rpc GetUser(GetUserRequest) returns (GetUserResponse) {
     option (google.api.http) = {
-      get: "/v1/users"
+      get: "/v1/users/{external_id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get User Resource"
+      description: "Fetch a User using the given external_id"
+      tags: "UserAPI"
+      security: {}
     };
   }
 }
